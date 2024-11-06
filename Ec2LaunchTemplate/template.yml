@@ -47,7 +47,6 @@ Parameters:
 
 Resources:
 
-  # VPC and Subnet Configuration
   VPC:
     Type: AWS::EC2::VPC
     Properties:
@@ -153,7 +152,6 @@ Resources:
       SubnetId: !Ref PrivateSubnet
       RouteTableId: !Ref PrivateRouteTable
 
-  # Security Group for EC2
   SecurityGroup:
     Type: AWS::EC2::SecurityGroup
     Properties:
@@ -163,7 +161,7 @@ Resources:
         - IpProtocol: tcp
           FromPort: 22
           ToPort: 22
-          CidrIp: 0.0.0.0/0 # Consider restricting SSH access for security
+          CidrIp: 0.0.0.0/0
         - IpProtocol: tcp
           FromPort: 80
           ToPort: 80
@@ -172,7 +170,6 @@ Resources:
         - Key: Name
           Value: !Sub "${EnvironmentName}-sg"
 
-  # IAM Role and Instance Profile
   EC2InstanceRole:
     Type: AWS::IAM::Role
     Properties:
@@ -236,7 +233,6 @@ Resources:
             systemctl start httpd
             echo "<html><h1>Hello from EC2 instance</h1></html>" > /var/www/html/index.html
 
-  # EC2 Auto Scaling Group (optional)
   AutoScalingGroup:
     Type: AWS::AutoScaling::AutoScalingGroup
     Properties:
